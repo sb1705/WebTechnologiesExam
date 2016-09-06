@@ -1,0 +1,67 @@
+<!--Ad ogni modifica di uno dei menù a tendina della pagina nella prima figura (evento change),
+viene invocato il servizio http://www.polisportivaquestoequello.it/searchAvailability.py,
+con parametri month, day, e time opportunamente popolati via form.-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <script type="text/javascript" src="prenotationApp.js"></script>
+	</head>
+	<body ng-module="prenotationApp">
+		<h1>Campi calcetto</h1>
+		<div class="content">
+			<div class="info" ng-controller="tableController as tblCtrl">
+				<h3>Scegli data e orario e verifica la disponibilità del campo</h3>
+				<p>
+					<label>Mese:</label>
+					<select name="mese" ng-model="date.month" ng-change="chMonth()">
+						<option value="giugno">giugno</option>
+						<option value="luglio">luglio</option>
+						<option value="agosto">agosto</option>
+					</select>
+					<label>Giorno:</label>
+					<select name="giorno" ng-model="date.day" ng-change="chDay()">
+						<option value="24">24</option>
+						<option value="25">25</option>
+						<option value="26">26</option>
+					</select>
+					<label>Orario:</label>
+					<select name="orario" ng-model="date.hour" ng-change="chHour()">
+						<option value="20">20-21</option>
+						<option value="21">21-22</option>
+						<option value="22">22-23</option>
+					</select>
+				</p>
+				<table id="timetable">
+					<thead>
+						<tr>
+							<th>nome</th>
+							<th>giocatori</th>
+							<th>descrizione</th>
+							<th>prezzo</th>
+							<th>libero</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="elem in fields">
+							<td>{{elem.name}}</td>
+							<td>{{elem.maxPlayers}}</td>
+							<td>
+                                <span ng-show="{{elem.open}}">all'aperto </span>
+                                <span ng-show="{{elem.lights}}">illuminazione </span>
+	                            <span ng-show="{{elem.lockerRoom}}">spogliatoi</span>
+                            </td>
+							<td>{{elem.price}}</td>
+							<td>
+                                <span ng-show="{{elem.available}}"> <img src="img/yes.png" alt="campo libero" /> </span>
+	                            <span ng-hide="{{elem.available}}"> <img src="img/no.png" alt="campo occupato" /></span>
+                            </td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="reservation"></div>
+		</div>
+	</body>
+</html>
