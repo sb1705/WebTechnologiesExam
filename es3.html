@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Compito TW</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+        <style type="text/css">
+                body{
+                    text-align: center;
+                    background-color: #99FFFF;
+                }
+
+                .content{
+                    border:solid  blue 10px;
+                    text-align: left;
+                }
+
+                nav a{
+                    color:white;
+                    background-color: gray;
+                    padding: 20px 50px; //sarebbe 150 ma fa brutto
+                }
+                nav a:active{
+                    background-color: blue;
+                    border: solid black;
+                }
+                th, td{
+                    border-color: black;
+                }
+                th{
+                    text-transform: uppercase;
+                    color:white;
+                    background-color: blue;
+                }
+                tr:nth-child(odd){
+                    background-color: #33cccc;
+                }
+                table::last-line{
+                    font-weight: bold;
+                }
+        </style>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <script src="myscript.js"> </script>
+    </head>
+    <body ng-app="myapp">
+    <div ng-controller="tripController as Ctrl">
+        <h1>Dolomiti Superski</h1>
+
+        <nav>
+            <a href="/impianti">Impianti aperti</a>
+            <a href="/webcam">Webcam</a>
+            <a href="/cartina">Cartina</a>
+            <a href="/percorsi">Percorsi</a>
+            <a href="/prezzi">Prezzi skipass</a>
+        </nav>
+
+        <div class="content">
+            <p>Il Dolomiti Superski è uno dei più importanti comprensori
+            sciistici italiani e mondiali comprendente gran parte delle piste
+            da sci invernali delle Dolomiti, per un totale di
+            <span class="strong">1.220 km di piste</span> divise in 12 zone
+            sciistiche.</p>
+            <p>Programma il tuo percorso all interno del comprensorio:</p>
+            <p>
+                <label for="partenza">Partenza: </label>
+                <select name="partenza" id="partenza" ng-model="dati.partenza" ng-change="foo()">
+                    <option value="stazione1">stazione 1</option>
+                    <option value="stazione2">stazione 2</option>
+                    <option value="stazione3">stazione 3</option>
+                    <!-- ecc. -->
+                </select>
+            </p>
+            <p>
+                <label for="arrivo">Arrivo: </label>
+                <select name="arrivo"  ng-change="foo()" ng-model="dati.arrivo" id="arrivo">
+                    <option value="stazione2">stazione 2</option>
+                    <option value="stazione3">stazione 3</option>
+                    <option value="stazione4">stazione 4</option>
+                    <!-- ecc. -->
+                </select>
+            </p>
+            <p>Livello:</p>
+            <ol>
+                <li>
+                  <input type="radio" name="livello" ng-model="livello" value="1.5" id="principiante"/>
+                  <label for="principiante">Principiante</label>
+                </li>
+                <li>
+                  <input type="radio" name="livello" ng-model="livello" value="1" id="intermedio"/>
+                  <label for="intermedio">Intermedio</label></li>
+                <li>
+                  <input
+                     type="radio" name="livello" ng-model="livello" value="0.75"
+                    id="esperto"/>
+                  <label for="esperto">Esperto</label>
+                </li>
+            </ol>
+            <p><input type="submit" value="Cerca" ng-click="foo()" name="submit" /></p>
+            <div id="tabella">
+                <table ng-show="impostato">
+                    <tr>
+                        <th>  Partenza  </th>
+                        <th>  Arrivo  </th>
+                        <th>  tempo percorso  </th>
+                        <th>  tempo percorrenza  </th>
+                        <th>  Distanza  </th>
+                    </tr>
+                    <tr ng-repeat="percorso in percorsi">
+                        <td>   {{ percorso.partenza }}   </td>
+                        <td>   {{ percorso.arrivo }}   </td>
+                        <td>   {{ percorso.tipo_percorso }}   </td>
+                        <td>   {{ percorso.tempo_percorrenza * livello}}   </td>
+                        <td>   {{ percorso.distanza }}   </td>
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
