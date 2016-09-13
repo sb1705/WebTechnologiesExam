@@ -1,0 +1,169 @@
+{
+    "@context": {
+        "dbr": "http://dbpedia.org/resource/",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "italy": "dbr:Italy_national_football_team", //aggiunta virgola
+        "ita_player_base_url": "italy:/",
+        "foaf": "http://xmlns.com/foaf/0.1/",
+        "team": "foaf:Organization",
+        "player": "foaf:Person",
+        "player_of": {
+                "@id": "foaf:member",
+                "@type": "@id" // cambiato has_type con @type
+        },
+        "plays_with": {
+                "@id": "foaf:knows",
+                "@type": "@id"
+        },
+        "name": { //cambiato, ho scoperto che ^^ in rdf vuol dire "di tipo..."
+          "@id":"foaf:name",
+          "@type":"xsd:string"
+      },
+        "number": {
+                "@id": "foaf:status",
+                "@type": "xsd:positiveInteger"
+        }
+    }
+}
+
+------------ Fatto così su http://www.easyrdf.org/converter non funziona -----------------
+{
+    "@context":"http://www.twexams.com/jsonld/context.json",
+    {
+        "@id":"ita_player_base_url:Buffon",
+        "@type":"player",
+        "name": "Buffon",
+        "number": "1",
+        "player_of":{
+            "@id":"italy",
+            "@type" :"team"
+        },
+        "plays_with":"ita_player_base_url:Insigne"
+    },
+    {
+        "@id":"ita_player_base_url:Insigne",
+        "@type":"player",
+        "name": "Insigne",
+        "number": "20",
+        "player_of":{
+            "@id":"italy",
+            "@type" :"team"
+        },
+        "plays_with":"ita_player_base_url:Buffon"
+    }
+}
+
+--------- Così invece funziona ------------
+{
+    "@context":"http://www.twexams.com/jsonld/context.json", //per provarlo sul sito copia incolla qui il context cancellando i commenti che gli danno fastidio
+    "@id":"ita_player_base_url:Buffon",
+    "@type":"player",
+    "name": "Buffon",
+    "number": "1",
+    "player_of":{
+        "@id":"italy",
+        "@type" :"team"
+    },
+    "plays_with":{
+        "@id":"ita_player_base_url:Insigne",
+        "@type":"player",
+        "name": "Insigne",
+        "number": "20",
+        "player_of":{
+            "@id":"italy",
+            "@type" :"team"
+        },
+        "plays_with":"ita_player_base_url:Buffon"
+
+    }
+
+}
+
+-----------------
+1.Buffon è una persona
+2.Buffon ha come nome Buffon
+3.Buffon ha come numero l'1
+4.Buffon è membro della nazionale italiana
+5.Buffon conosce Insigne
+
++ 5 Le stesse anche per insigne
++ 1 L'italia è un team (Organization)
+
+ quindi in totale 11.
+
+
+-------------Anche così funziona---------------------
+[
+    {
+        "@context":{
+            "dbr": "http://dbpedia.org/resource/",
+            "xsd": "http://www.w3.org/2001/XMLSchema#",
+            "italy": "dbr:Italy_national_football_team",
+            "ita_player_base_url": "italy:/",
+            "foaf": "http://xmlns.com/foaf/0.1/",
+            "team": "foaf:Organization",
+            "player": "foaf:Person",
+            "player_of": {
+                    "@id": "foaf:member",
+                    "@type": "@id"
+            },
+            "plays_with": {
+                    "@id": "foaf:knows",
+                    "@type": "@id"
+            },
+            "name": {
+              "@id":"foaf:name",
+              "@type":"xsd:string"
+          },
+            "number": {
+                    "@id": "foaf:status",
+                    "@type": "xsd:positiveInteger"
+            }
+        },
+        "@id":"ita_player_base_url:Buffon",
+        "@type":"player",
+        "name": "Buffon",
+        "number": "1",
+        "player_of":{
+            "@id":"italy",
+            "@type" :"team"
+        },
+        "plays_with": "ita_player_base_url:Insigne"
+    },
+    {
+         "@context":{
+                "dbr": "http://dbpedia.org/resource/",
+                "xsd": "http://www.w3.org/2001/XMLSchema#",
+                "italy": "dbr:Italy_national_football_team",
+                "ita_player_base_url": "italy:/",
+                "foaf": "http://xmlns.com/foaf/0.1/",
+                "team": "foaf:Organization",
+                "player": "foaf:Person",
+                "player_of": {
+                        "@id": "foaf:member",
+                        "@type": "@id"
+                },
+                "plays_with": {
+                        "@id": "foaf:knows",
+                        "@type": "@id"
+                },
+                "name": {
+                  "@id":"foaf:name",
+                  "@type":"xsd:string"
+              },
+                "number": {
+                        "@id": "foaf:status",
+                        "@type": "xsd:positiveInteger"
+                }
+            },
+           "@id":"ita_player_base_url:Insigne",
+            "@type":"player",
+            "name": "Insigne",
+            "number": "20",
+            "player_of":{
+                "@id":"italy",
+                "@type":"team"
+            },
+            "plays_with":"ita_player_base_url:Buffon"
+    }
+]
