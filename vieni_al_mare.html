@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vieni al mare </title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="spiaggiaStyle.css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="prenotaSpiaggia.js"></script>
+</head>
+<body ng-app="app" ng-controller="myController as Ctrl">
+    <div class="container">
+        <h1> Vieni al mare <span class="apice">BETA</span></h1>
+        <div id="left">
+            <form name="formMare">
+            <h4>Periodo</h4>
+            <hr>
+            <label>Data inizio soggiorno (gg/mm/aaaa) </label> <input ng-model="inizioSoggiorno" type="date"></br>
+            <label>Periodo </label>
+                <select ng-model="periodo">
+                    <option value="giornata">singola giornata</option>
+                    <option value="settimana">settimana</option>
+                    <option value="stagione">intera stagione</option>
+                </select>
+            <hr>
+            <h4>Località</h4>
+            <label>Località </label><input ng-model:"localita" type="text">
+            <hr>
+            <h4>Dati personali</h4>
+            <label>Email </label><input type="email" ng-model="email"><br>
+            <label>Telefono </label><input type="tel" ng-model="telefono">
+            <hr>
+            <input type="submit" class="fright" ng-click="cercaSpiaggia()">
+        </div>
+        <div id="right" ng-show="submittato">
+            <h4 class="non_accapo">{{max_index}} stazioni balneari soddisfano la tua ricerca</h4>
+
+
+            <button class="tright" ng-click="cur_index=(cur_index+1)%max_index">next({{(cur_index+1)}}/{{max_index}}) >>></button>
+
+
+            <hr>
+            <img ng-src="{{spiagge[cur_index].img_link}}">
+            <div class="descrizione">
+                <h4>Stazione balneare: </h4> {{ spiagge[cur_index].nome }}
+                <h4>Servizi base: </h4> {{ spiagge[cur_index].descrizione }}
+                <h4>Servizi aggiuntivi:</h4>
+                <br><label>Cabina con doccia (14 euro cad.) </label><input type="checkbox"  ng-true-value="14" ng-false-value="0" ng-model="cabinaDoccia"/>
+                <br><label>sedie aggiuntive (4 euro cad.) </label><input type="text" ng-model="sedie"/>
+                <br><label>lettini aggiuntivi  (8 euro cad.)</label><input type="text" ng-model="lettini"/>
+
+            </div>
+            <hr>
+            <span>Totale {{spiagge[cur_index].costo+cabinaDoccia+(sedie*4)+(lettini*8)}}</span><input type="submit" class="fright" ng-click="prenota()">
+        </div>
+    </div>
+</body>
+</html>

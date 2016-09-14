@@ -1,0 +1,49 @@
+h1{
+    text-align:center;
+}
+.apice{
+    vertical-align: super;
+}
+#left{
+    width:40%;
+    border-right:solid black 2px;
+    padding:2%;
+    display: inline-block;
+}
+#right{
+
+    padding: 2%;
+    display: inline-block;
+}
+label, input css{
+/* in order to define widths */
+display: inline-block;
+}
+
+label {
+    width: 55%;
+    /* positions the label text beside the input */
+}
+
+label + input {
+width: 30%;
+/* large margin-right to force the next element to the new-line
+   and margin-left to create a gutter between the label and input */
+}
+.fright{
+    float:right;
+}
+
+.tright{
+    text-align:right;
+}
+.non_accapo{
+    display:inline;
+}
+
+img{
+    float:left;
+    width:200px;
+    height:100px;
+
+}
